@@ -1,9 +1,5 @@
-import tkinter as tk
-from tkinter import filedialog as fd
 import pdfplumber
 from PyPDF2 import PdfFileReader, PdfFileWriter
-import gc
-import sys
 
 
 class Backend:
@@ -74,8 +70,11 @@ class Backend:
 
         pdfWriter = PdfFileWriter()
 
+        pages_opened = []
         for page_num in pages:
-            pdfWriter.addPage(pdf.getPage(page_num))
+            if page_num not in pages_opened:
+                pdfWriter.addPage(pdf.getPage(page_num))
+                pages_opened.append(page_num)
 
         with open(f'{self.save_folder_name}/{key}.pdf', 'wb') as f:
             pdfWriter.write(f)

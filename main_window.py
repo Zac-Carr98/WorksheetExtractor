@@ -1,9 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog as fd
-import pdfplumber
-from PyPDF2 import PdfFileReader, PdfFileWriter
 import gc
-import sys
 from backend import Backend
 import threading
 
@@ -32,7 +29,6 @@ class MainWindow:
         self.backend.select_target_file(fd.askopenfilename())
 
     def save_location(self):
-        print("happens")
         self.backend.set_save_folder(fd.askdirectory())
 
     def add_keyword(self):
