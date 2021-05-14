@@ -1,5 +1,6 @@
 import pdfplumber
 from PyPDF2 import PdfFileReader, PdfFileWriter
+import time
 
 
 class Backend:
@@ -53,6 +54,8 @@ class Backend:
                 continue
 
     def run(self):
+        t0 = time.time()
+
         self.open_pdf()
         self.get_num_pages()
         self.page_loop()
@@ -61,6 +64,9 @@ class Backend:
 
         self.create_pdfs()
 
+        t1 = time.time()
+        print(t1-t0)
+
     def create_pdfs(self):
         for key, values in self.dict.items():
             self.split(pdf_path=self.target_file_name, pages=values, key=key)
@@ -68,15 +74,23 @@ class Backend:
     def split(self, pdf_path, pages, key):
         pdf = PdfFileReader(pdf_path)
 
+        pages_opened = []
+        for i in pages:
+            if i not in pages_opened:
+                pages_opened.append(i)
+
+        self.check_range(pages)
+
         pdfWriter = PdfFileWriter()
 
-        pages_opened = []
         for page_num in pages:
-            if page_num not in pages_opened:
-                pdfWriter.addPage(pdf.getPage(page_num))
-                pages_opened.append(page_num)
+            pdfWriter.addPage(pdf.getPage(page_num))
 
         with open(f'{self.save_folder_name}/{key}.pdf', 'wb') as f:
             pdfWriter.write(f)
             f.close()
+
+    def check_range(self, a):
+        b = set(range(min(a), max(a) + 1))
+        return set(a).symmetric_difference(b)
 
