@@ -3,6 +3,16 @@ from PyPDF2 import PdfFileReader, PdfFileWriter
 import time
 
 
+def find_missing(lst):
+    missing = [x for x in range(lst[0], lst[-1] + 1)
+            if x not in lst]
+    corrected = lst.extend(missing)
+    if len(corrected) < 15:
+        return sorted(corrected)
+    else:
+        return lst
+
+
 class Backend:
     def __init__(self):
         self.target_file_name = None
@@ -46,12 +56,34 @@ class Backend:
             page.close()
             if self.page_text:
                 self.search_page(page_num)
+                # self.search_page_two(page_num)
 
     def search_page(self, page_num):
         for keyword in self.key_words:
             if keyword in self.page_text:
                 self.dict[keyword].append(page_num)
                 continue
+
+    def search_page_quicker(self, page_num):
+        self.page_text = sorted(self.page_text.split())
+        for keyword in self.key_words:
+            if self.binary_search(keyword):
+                self.dict[keyword].append(page_num)
+
+    def binary_search(self, keyword):
+        first = 0
+        last = len(self.page_text) - 1
+        found = False
+        while first <= last and not found:
+            middle = (first + last) // 2
+            if self.page_text[middle] == keyword:
+                found = True
+            else:
+                if keyword < self.page_text[middle]:
+                    last = middle - 1
+                else:
+                    first = middle + 1
+        return found
 
     def run(self):
         t0 = time.time()
@@ -69,29 +101,24 @@ class Backend:
         print(f'Seconds:{round(total_t, 5)}, Minutes: {round(total_t/60, 5)}')
 
     def create_pdfs(self):
+        pdf = PdfFileReader(self.target_file_name)
         for key, values in self.dict.items():
-            self.split(pdf_path=self.target_file_name, pages=values, key=key)
+            self.split(pdf=pdf, pages=values, key=key)
 
-    def split(self, pdf_path, pages, key):
-        pdf = PdfFileReader(pdf_path)
+    def split(self, pdf, pages, key):
 
         pages_opened = []
         for i in pages:
             if i not in pages_opened:
                 pages_opened.append(i)
 
-        # self.check_range(pages)
+        pages_opened = find_missing(pages_opened)
 
         pdfWriter = PdfFileWriter()
 
-        for page_num in pages:
+        for page_num in pages_opened:
             pdfWriter.addPage(pdf.getPage(page_num))
 
         with open(f'{self.save_folder_name}/{key}.pdf', 'wb') as f:
             pdfWriter.write(f)
             f.close()
-
-    def check_range(self, a):
-        b = set(range(min(a), max(a) + 1))
-        return set(a).symmetric_difference(b)
-

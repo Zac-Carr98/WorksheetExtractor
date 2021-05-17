@@ -1,6 +1,8 @@
 import tkinter as tk
 from main_window import MainWindow
 
+# TODO - make unit test
+
 
 class App:
     def __init__(self):
