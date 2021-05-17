@@ -65,7 +65,8 @@ class Backend:
         self.create_pdfs()
 
         t1 = time.time()
-        print(t1-t0)
+        total_t = t1-t0
+        print(f'Seconds:{round(total_t, 5)}, Minutes: {round(total_t/60, 5)}')
 
     def create_pdfs(self):
         for key, values in self.dict.items():
@@ -79,7 +80,7 @@ class Backend:
             if i not in pages_opened:
                 pages_opened.append(i)
 
-        self.check_range(pages)
+        # self.check_range(pages)
 
         pdfWriter = PdfFileWriter()
 

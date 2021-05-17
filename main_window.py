@@ -5,7 +5,6 @@ from backend import Backend
 import threading
 
 
-
 class MainWindow:
     def __init__(self, root):
         self.root = root
