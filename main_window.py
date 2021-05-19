@@ -55,7 +55,6 @@ class MainWindow:
         self.btn_run = tk.Button(self.root, text='Run', command=self.run, bg='#ff7f27', fg='black')
         self.btn_run.pack(pady=10)
 
-
     def open_dialog(self):
         self.backend.select_target_file(fd.askopenfilename())
 
