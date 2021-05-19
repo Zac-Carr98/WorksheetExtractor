@@ -10,7 +10,7 @@ class App:
 
     def main(self):
         big_widget = MainWindow(self.root)
-        big_widget.grid()
+        # big_widget.grid()
         self.root.mainloop()
 
 
