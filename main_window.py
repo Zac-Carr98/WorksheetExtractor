@@ -30,7 +30,7 @@ class MainWindow:
         # btn_select
         # self.btn_select = tk.Button(self.root, text='Click to Select File', command=self.open_dialog, bg='#ff7f27', fg='black')
         self.loadimage1 = tk.PhotoImage(file="images/SelectFile.png")
-        self.btn_select = tk.Button(self.root, image=self.loadimage1)
+        self.btn_select = tk.Button(self.root, image=self.loadimage1, command=self.open_dialog)
         self.btn_select["bg"] = "white"
         self.btn_select["border"] = "0"
         self.btn_select.pack(pady=10)
@@ -38,7 +38,7 @@ class MainWindow:
         # btn location
         # self.btn_location = tk.Button(self.root, text='Save Location', command=self.save_location, bg='#ff7f27', fg='black')
         self.loadimage2 = tk.PhotoImage(file="images/SaveLocation.png")
-        self.btn_location = tk.Button(self.root, image=self.loadimage2)
+        self.btn_location = tk.Button(self.root, image=self.loadimage2, command=self.save_location)
         self.btn_location["bg"] = "white"
         self.btn_location["border"] = "0"
         self.btn_location.pack(pady=10)
@@ -54,7 +54,7 @@ class MainWindow:
         # submit keywords
         # self.submit_keyword = tk.Button(self.frame1, text='Submit', command=self.add_keyword, bg='#ff7f27', fg='black')
         self.loadimage3 = tk.PhotoImage(file="images/Submit.png")
-        self.submit_keyword = tk.Button(self.frame1, image=self.loadimage3)
+        self.submit_keyword = tk.Button(self.frame1, image=self.loadimage3, command=self.add_keyword)
         self.submit_keyword["bg"] = "white"
         self.submit_keyword["border"] = "0"
         self.submit_keyword.grid(row=0, column=1, padx=10, sticky=tk.W)
@@ -62,7 +62,7 @@ class MainWindow:
         # btn_run
         # self.btn_run = tk.Button(self.root, text='Run', command=self.run, bg='#ff7f27', fg='black')
         self.loadimage4 = tk.PhotoImage(file="images/Run.png")
-        self.btn_run = tk.Button(self.root, image=self.loadimage4)
+        self.btn_run = tk.Button(self.root, image=self.loadimage4, command=self.run)
         self.btn_run["bg"] = "white"
         self.btn_run["border"] = "0"
         self.btn_run.pack(pady=10)
