@@ -4,7 +4,7 @@ from tkinter import PhotoImage
 import gc
 from backend import Backend
 import threading
-from tkinter import Frame
+from widgets import CustomButton
 
 
 class MainWindow:
@@ -28,7 +28,9 @@ class MainWindow:
         self.placement.pack(pady=100)
 
         # btn_select
-        self.btn_select = tk.Button(self.root, text='Click to Select File', command=self.open_dialog, bg='#ff7f27', fg='black')
+        # self.btn_select = tk.Button(self.root, text='Click to Select File', command=self.open_dialog,
+        # bg='#ff7f27', fg='black')
+        self.btn_select = CustomButton(self.root, text='Click to Select File', command=self.open_dialog)
         # self.loadimage = tk.PhotoImage(file="C:/Users/tpsharp/Pictures/Saved Pictures/SaveLocation.png")
         # self.btn_select = tk.Button(self.root, image=self.loadimage)
         # self.btn_select["bg"] = "white"
@@ -36,7 +38,7 @@ class MainWindow:
         self.btn_select.pack(pady=10)
 
         # btn location
-        self.btn_location = tk.Button(self.root, text='Save Location', command=self.save_location, bg='#ff7f27', fg='black')
+        self.btn_location = CustomButton(self.root, text='Save Location', command=self.save_location)
         self.btn_location.pack(pady=10)
 
         # Frame for keyword entry
@@ -48,11 +50,11 @@ class MainWindow:
         self.text_entry.grid(row=0, column=0, padx=10)
 
         # submit keywords
-        self.submit_keyword = tk.Button(self.frame1, text='Submit', command=self.add_keyword, bg='#ff7f27', fg='black')
+        self.submit_keyword = CustomButton(self.frame1, text='Submit', command=self.add_keyword)
         self.submit_keyword.grid(row=0, column=1, padx=10, sticky=tk.W)
 
         # btn_run
-        self.btn_run = tk.Button(self.root, text='Run', command=self.run, bg='#ff7f27', fg='black')
+        self.btn_run = CustomButton(self.root, text='Run', command=self.run)
         self.btn_run.pack(pady=10)
 
     def open_dialog(self):
